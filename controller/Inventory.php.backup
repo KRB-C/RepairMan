@@ -1,0 +1,56 @@
+<?php
+//Inventory
+require '../database/Database.php';
+if (isset($_POST["updInven"])) {
+    if (updateInventory($_POST["invName"], $_POST["invDate"], $_POST["invWarranty"], $_POST["invID"])) {
+        print '<script>alert("Updated!");</script>';
+        print '<script>window.location.assign("../index.php")</script>';
+    }
+
+}
+
+if (isset($_POST["delInven"])) {
+    if (deleteInventory($_POST["invID"])) {
+        print '<script>window.location.assign("../index.php")</script>';
+        echo 'success';}
+
+}
+
+if (isset($_POST["insInven"])) {
+    if (insertInventory($_POST["invID"], $_POST["invName"], $_POST["invDate"], $_POST["invWarranty"])) {
+        print '<script>window.location.assign("../index.php")</script>';
+        echo 'success';}
+
+}
+
+function showTable()
+{
+    $result = countInventory();
+    while ($row = mysqli_fetch_assoc($result)) {
+        echo "
+        <form action='controller/Inventory.php' method='post'>
+        <tr>
+            <th scope='row'> <input type='text' name='invID' value='" . $row['InvID'] . "'readonly th>
+            <td><input type='text' name='invName' value='" . $row['Inv_Name'] . "'</td>
+            <td><input type='text' name='invDate' value='" . $row['Date_Acquired'] . "'</td>
+            <td><input type='text' name='invWarranty' value='" . $row['Warranty'] . "'</td>
+            <td class='table-fit'> <button type='submit' name='updInven' class='btn btn-outline-primary'>Update</button></td>
+            <td class='table-fit'> <button type='submit' name='delInven' class='btn btn-outline-primary'>Delete</button></td>
+        </tr>
+        </form>
+        ";
+    }
+    ;
+    echo "
+<form action='controller/Inventory.php' method='post'>
+<tr>
+            <th scope='row'> <input type='text' name='invID' value='' th>
+            <td><input type='text' name='invName' value=''</td>
+            <td><input type='text' name='invDate' value=''</td>
+            <td><input type='text' name='invWarranty' value=''</td>
+            <td class='table-fit'> <button type='submit' name='insInven' class='btn btn-outline-primary'>Add</button></td>
+        </tr>
+        </form>
+        ";
+
+}

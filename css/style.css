@@ -1,0 +1,20 @@
+/*#680707 red*/
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+html,
+body {
+  height: 100vh;
+}
+
+.col-fit {
+	white-space: nowrap;
+    width: 13%;
+}
+
+table th {
+  width: auto !important;
+}
