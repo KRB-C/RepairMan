@@ -1,0 +1,60 @@
+<?php
+if (isset($_GET["SPEECH"]))
+{
+?>
+        <?php  $db = mysqli_connect("localhost", "root", "" ,"repairman");
+						  $query = "SELECT * FROM facilities where Building='Building-A' && Floor='1st Floor' && Room='Speech Lab' &&Status='Active'"; 
+						$result = mysqli_query($db, $query);  						  
+                          while($row = mysqli_fetch_array($result))  
+                          {  
+                          ?>  
+                          <tr>  				  
+                               <td><?php echo $row["id"]; ?></td>
+							   <td><?php echo $row["Item_Name"]; ?></td>
+							   <td><?php echo $row["Serial_Num"]; ?></td>
+							   <td><?php echo $row["Warranty"]; ?></td>
+							   <td><?php echo $row["Building"] .$row["Floor"] .$row["Room"];?></td>
+							   <td><?php echo $row["Status"]; ?></td>
+                            <td><input type="button" name="view" value="view" 
+                         id="<?php echo $row["id"]; ?>" class="btn btn-info btn-xs view_data" /></td>  
+                          </tr>  
+                          <?php  
+                          }  
+                          ?>  
+		<?php } ?>
+
+
+
+</html>
+<div id="dataModal" class="modal fade">  
+      <div class="modal-dialog">  
+           <div class="modal-content">  
+                <div class="modal-header">  
+                     
+                     <center><h4 class="modal-title">More Information</h4></center>
+                </div>  
+                <div class="modal-body" id="employee_detail">  
+                </div>  
+                <div class="modal-footer">  
+                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>  
+                </div>  
+           </div>  
+      </div>  
+ </div>  
+
+ <script>  
+ $(document).ready(function(){  
+      $('.view_data').click(function(){  
+           var id = $(this).attr("id");  
+           $.ajax({  
+                url:"select.php",  
+                method:"post",  
+                data:{id:id},  
+                success:function(data){  
+                     $('#employee_detail').html(data);  
+                     $('#dataModal').modal("show");  
+                }  
+           });  
+      });  
+ });  
+ </script>
